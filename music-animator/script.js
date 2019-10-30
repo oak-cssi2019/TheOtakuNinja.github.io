@@ -1,5 +1,5 @@
 class MyVisualizer extends AbstractVisualizer {
-    constructor(analyzedAudio) {
+    constructor(analyzedAudio = []) {
       super();
       this.peaks = analyzedAudio.peaks;
     }
@@ -111,3 +111,9 @@ document.getElementById('playButton').addEventListener('click', (clickEvent) => 
 		document.getElementById('playCircle').setAttribute("class", "playing");
   }
 });
+
+
+
+let visualizer = new MyVisualizer();
+visualizer.drawRectangle({x: 200, y:300}, {x:600, y:300}, {x:600, y:400}, {x:200, y:400});
+visualizer.drawSquare({x: 500, y:100}, 50);

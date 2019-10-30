@@ -7,42 +7,6 @@ const COLOR = "black";
 const WIDTH = 10;
 
 
-const Shape = {
-  'CIRCLE': 'CIRCLE',
-  'SPIRAL': 'SPIRAL',
-  'SQUIGGLY': 'SQUIGGLY',
-  'SEMI_CIRCLE': 'SEMI_CIRCLE',
-  'LINE': 'LINE',
-};
-  drawRectangle(point1, point2, point3, point4, rectangleProperties) {
-    const context = this.canvas.getContext("2d");
-    context.fillStyle = rectangleProperties.color;
-    context.moveTo(point1.x, point1.y);
-    context.beginPath();
-    context.lineTo(point2.x, point2.y);
-    context.lineTo(point3.x, point3.y);
-    context.lineTo(point4.x, point4.y);
-    context.lineTo(point1.x, point1.y);
-    context.fill();
-    context.lineWidth = rectableProperties.width;
-    context.strokeStyle = rectangleProperties.color;
-    context.stroke();
-  }
-
-  drawSquare(startingPoint, sideLength, squareProperties) {
-    const context = this.canvas.getContext("2d")
-    context.fillStyle = squareProperties.color;
-    context.moveTo(point1.x, point1.y);
-    context.beginPath();
-    context.lineTo(point1.x + sideLength, point1.y)
-    context.lineTo(point1.x + sideLength, point1.y + sideLength);
-    context.lineTo(point1.x, point1.y + sideLength);
-    context.fill()
-    context.lineWidth = squareProperties.width;
-    context.strokeStyle = squareProperties.color;
-    context.stroke()
-  }
-
 class AbstractVisualizer {
   constructor() {
     this.shapeArr = [];
@@ -65,6 +29,40 @@ class AbstractVisualizer {
   clearAllShapes() {
     const context = this.canvas.getContext("2d");
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  drawRectangle(point1, point2, point3, point4, rectangleProperties = {width:5, color:"#FF0000"}) {
+    const context = this.canvas.getContext("2d");
+    context.fillStyle = rectangleProperties.color;
+    context.lineWidth = rectangleProperties.width;
+    context.strokeStyle = rectangleProperties.color;
+    context.beginPath();
+    context.moveTo(point1.x, point1.y);
+    context.lineTo(point2.x, point2.y);
+    context.lineTo(point3.x, point3.y);
+    context.lineTo(point4.x, point4.y);
+    context.lineTo(point1.x, point1.y);
+    context.fill();
+    context.stroke();
+    context.closePath();
+  }
+
+
+  drawSquare( startingPoint, sideLength, squareProperties = {width:5, color:"#0000FA"} ) {
+    const context = this.canvas.getContext("2d");
+    context.fillStyle = squareProperties.color;
+    context.lineWidth = squareProperties.width;
+    context.strokeStyle = squareProperties.color;
+    context.beginPath();
+    context.moveTo(startingPoint.x, startingPoint.y);
+    context.lineTo(startingPoint.x + sideLength, startingPoint.y);
+    context.lineTo(startingPoint.x + sideLength, startingPoint.y + sideLength);
+    context.lineTo(startingPoint.x, startingPoint.y + sideLength);
+    context.stroke();
+    context.closePath();
+    context.fill();
+
+
   }
 
   drawShape(shape, scale = 1.0) {
