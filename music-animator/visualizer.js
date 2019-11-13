@@ -1,33 +1,31 @@
 const CANVAS_WIDTH = 1000;
 const CANVAS_HEIGHT = 600;
-const BAR_CANVAS_HEIGHT = 100;
 const BACKGROUND_COLOR = "white";
+<<<<<<< HEAD
 const BAR_COLOR = generateRandomColor();
 const COLOR = "black";
 const WIDTH = 10;
 
+=======
+>>>>>>> upstream/master
 
 class AbstractVisualizer {
   constructor() {
-    this.shapeArr = [];
     this.canvas = document.getElementById('canvas');
-    this.barCanvas = document.getElementById('bar-canvas');
-    this.growScale = 2;
-    this.shrinkScale = 1.2;
     this.start();
   }
 
   renderBeatAnimation() {
-    throw new Error('Please extend class an override method');
+    throw new Error('Please extend class and override method');
   }
 
   start() {
     this.drawBackground(this.canvas, {width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
-    this.drawBackground(this.barCanvas, {width: CANVAS_WIDTH, height: BAR_CANVAS_HEIGHT});
   }
 
-  clearAllShapes() {
+  drawRectangle(point1, point2, point3, point4, rectangleProperties = {}) {
     const context = this.canvas.getContext("2d");
+<<<<<<< HEAD
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
@@ -37,11 +35,17 @@ class AbstractVisualizer {
     context.lineWidth = rectangleProperties.width;
     context.strokeStyle = rectangleProperties.color;
     context.beginPath();
+=======
+    context.lineWidth = rectangleProperties.width || 5;
+    context.strokeStyle = rectangleProperties.color || '#FF00000';
+
+>>>>>>> upstream/master
     context.moveTo(point1.x, point1.y);
     context.lineTo(point2.x, point2.y);
     context.lineTo(point3.x, point3.y);
     context.lineTo(point4.x, point4.y);
     context.lineTo(point1.x, point1.y);
+<<<<<<< HEAD
     context.fill();
     context.stroke();
     context.closePath();
@@ -151,27 +155,17 @@ class AbstractVisualizer {
       startingPoint,
       color,
     });
+=======
+    context.closePath();
+    context.fill();
+>>>>>>> upstream/master
   }
 
-  drawSpiral(i, startingPoint, color) {
-    const canvas = this.canvas;
-    const context = canvas.getContext("2d");
-    const angle = 0.1 * i;
-
-    const x = (1 + angle) * Math.cos(0) + startingPoint.x;
-    const y = (1 + angle) * Math.sin(0) + startingPoint.y;
-
-    context.beginPath();
-    for (let i = 0; i < 360; i ++) {
-      const angle = 0.1 * i;
-      const x = (1 + angle) * Math.cos(angle) + startingPoint.x;
-      const y = (1 + angle) * Math.sin(angle) + startingPoint.y;
-      context.lineTo(x, y);
-    }
-    context.strokeStyle = color;
-    context.stroke();
+  drawSquare() {
+    // TODO(week 3): Implement.
   }
 
+<<<<<<< HEAD
 
   // Generates a random set of points (x, y) for a certain range [min, max] (inclusive)
   generateRandomPoint() {
@@ -180,8 +174,13 @@ class AbstractVisualizer {
       y: generateRandomValue(0, 600)
 
     };
+=======
+  drawCircle() {
+    // TODO(week 3): Implement.
+    // See here for more information:
+    // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc
+>>>>>>> upstream/master
   }
-
 
   drawBackground(canvas, canvasDimensions, color = BACKGROUND_COLOR) {
     const context = canvas.getContext("2d");
@@ -190,6 +189,7 @@ class AbstractVisualizer {
     context.fillStyle = color;
     context.fillRect(0, 0, canvasDimensions.width, canvasDimensions.height);
   }
+<<<<<<< HEAD
 
   drawLine(startPoint, endPoint, lineProperties) {
     const canvas = this.canvas;
@@ -287,21 +287,35 @@ class AbstractVisualizer {
         width,
         color);
   }
+=======
+>>>>>>> upstream/master
 }
 
 
+/**
+ * Generates a hexadecimal random color.
+ */
 function generateRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-  return color;
+  const color = generateRandomValue(0x0, 0xFFFFFF);
+  return '#' + color.toString(16);
 }
 
-// Generates a random value between [min, max] (inclusive).
+/**
+ * Generates a random value between [min, max] (inclusive).
+ */
 function generateRandomValue(minValue = 1, maxValue = 10) {
   min = Math.ceil(minValue);
   max = Math.floor(maxValue);
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function generateRandomPoint() {
+  // TODO:
+  // Use generateRandomValue to create a ranom x and a random y value.
+  // HINT: we can use the constants CANVAS_HEIGHT and CANVAS_WIDTH for the max
+  //     x and y values.
+  return {
+    x: 0,
+    y: 0,
+  };
 }
