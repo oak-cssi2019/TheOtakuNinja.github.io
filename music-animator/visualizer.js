@@ -31,7 +31,7 @@ class AbstractVisualizer {
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  drawRectangle(point1, point2, point3, point4, rectangleProperties = {width:5, color:"#FF0000"}) {
+  drawRectangle(point1, point2, point3, point4, rectangleProperties = {width:5, color: generateRandomColor()}) {
     const context = this.canvas.getContext("2d");
     context.fillStyle = rectangleProperties.color;
     context.lineWidth = rectangleProperties.width;
@@ -48,7 +48,7 @@ class AbstractVisualizer {
   }
 
 
-  drawSquare( startingPoint, sideLength, squareProperties = {width:5, color:"#0000FA"} ) {
+  drawSquare( startingPoint, sideLength, squareProperties = {width:5, color: generateRandomColor()} ) {
     const context = this.canvas.getContext("2d");
     context.fillStyle = squareProperties.color;
     context.lineWidth = squareProperties.width;
@@ -61,9 +61,16 @@ class AbstractVisualizer {
     context.stroke();
     context.closePath();
     context.fill();
-
-
   }
+  drawSircle(centerPoint, radius, color) {
+  const context = canvas.getContext("2d");
+  context.beginPath();
+  context.arc(centerPoint.x, centerPoint.y, radius, 0, 2 * Math.PI);
+  context.fillStyle = color;
+  context.fill();
+  context.strokeStyle = color;
+  context.stroke();
+}
 
   drawShape(shape, scale = 1.0) {
     // TODO(adam/jamie): Convert params to object (just add to
@@ -167,10 +174,11 @@ class AbstractVisualizer {
 
 
   // Generates a random set of points (x, y) for a certain range [min, max] (inclusive)
-  generateRandomPoint(range) {
+  generateRandomPoint() {
     return {
-      x: generateRandomValue(range.min, range.max),
-      y: generateRandomValue(range.min, range.max),
+      x: generateRandomValue(0, 1000),
+      y: generateRandomValue(0, 600)
+
     };
   }
 
