@@ -8,17 +8,41 @@ class GameOfLife {
 }
 
 class Canvas {
-  constructor(Container){
+  constructor(container){
     let canvasElement = document.createElement("canvas");
     this.obj = canvasElement;
     this.pixelWidth = 803;
+    canvasElement.width = this.pixelWidth;
     this.pixelHeight = 506;
+    canvasElement.height = this.pixelHeight;
     container.appendChild(canvasElement);
-    this.ctv = this.obj.getContext("2D");
+    this.ctx = this.obj.getContext("2d");
     this.setGridSize(11);
   }
 
-  draw(){
+  draw(cells){
+    let ctx = this.ctx;
+
+
+    ctx.fillStyle = "#7e7e7e";
+    ctx.lineWidth = 1;
+    ctx.fillRect(0,0, this.pixelWidth, this.pixelHeight);
+    ctx.strokeStyle = "#999";
+
+    for (let n = this.cellSize; n < this.pixelWidth; n += this.cellSize) {
+      ctx.beginPath();
+      ctx.moveTo(n + .5 , 0);
+      ctx.lineTo(n + .5 , this.pixelHeight);
+      ctx.stroke();
+    }
+
+    for (let n = this.cellSize; n < this.pixelHeight; n += this.cellSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, n + .5);
+      ctx.lineTo(this.pixelWidth , n + 0.5);
+      ctx.stroke();
+    }
+
 
   }
 
@@ -35,7 +59,10 @@ class Canvas {
   }
 
   setGridSize(gridSize){
-
+    this.cellSize = gridSize;
+    this.width = Math.floor(this.pixelWidth/this.cellSize);
+    this.height = Math.floor(this.pixelHeight/this.cellSize);
+    // this.cellSize = size;
   }
 
 }
@@ -72,7 +99,8 @@ class Shape {
   }
 }
 
-class controls {
+
+class Controls {
   constructor(Canvas, Shape, GameOfLife){
        this.canvas = Canvas;
        this.shape = Shape;
@@ -83,7 +111,8 @@ class controls {
   }
 
   init(shapes){
-
+    this.canvas.click((event) => {
+    });
   }
 
   setGenerations(gen){
@@ -103,4 +132,6 @@ let canvasElement = document.getElementById("canvas-div");
 let canvas = new Canvas(canvasElement);
 let shape = new Shape(canvas);
 let gameoflife = new GameOfLife();
-let controls = new Controls(canvas, shapes, gameoflife);
+let control = new Controls(canvas, shape, gameoflife);
+
+canvas.draw();
